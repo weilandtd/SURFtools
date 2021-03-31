@@ -24,9 +24,7 @@ def residuals(p,X,Z):
 
 
 def preprocessing(Z, sigma):
-    median = np.median(Z.flatten())
     Z_processed = Z
-    #Z_processed[ Z_processed < median ] = median
     Z_processed= gaussian_filter(Z_processed,sigma,order=0, mode='nearest')
     return Z_processed
 
@@ -46,9 +44,10 @@ def post_processing(p):
     :return:
     """
     r_z, r_x, r_y, h, x0, y0, z0 = p
-
-    dx = 2.*r_x*(1.-h/r_z)
-    dy = 2.*r_y*(1.-h/r_z)
+    delta = (1.-h/r_z)
+    rho = np.sqrt(1. - delta**2)
+    dx = 2.*r_x*rho
+    dy = 2.*r_y*rho
     R = r_z
     x = r_z - h
     V = np.pi*r_x*r_y*(2*r_z/3 - x + x**3 / (3*r_z**2))
@@ -66,9 +65,11 @@ def plot_xyy0(x,y,y0):
 
 if __name__ == '__main__':
 
+    # Process a whole folder
     _, folder, output = argv
+
     # r_z, r_x, r_y, h, x0, y0, z0
-    p0 = [2, 2, 2, 0.2, 1.5 , 1.5, 0.1]
+    p0 = [2, 2, 2, 0.2, 1.5, 1.5, 0.1]
 
     output_data = []
 
