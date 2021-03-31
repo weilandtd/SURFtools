@@ -5,7 +5,8 @@ Although it current abilities are quite simple. More advanced tools will be deve
 
 .. Install
 
-To install the toolbox clone the repo and run::
+To install the toolbox clone the repo and run
+::
     cd path/to/SURFtools
     pip install setup.py
 
